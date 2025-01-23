@@ -6,6 +6,8 @@ profiles:
   activation:
   - env: ACTIVATE=dev
   build:
+    local:
+      push: true
     tagPolicy:
       envTemplate:
         template: "dev-{{.TAGS}}"
@@ -23,6 +25,8 @@ profiles:
   activation:
   - env: ACTIVATE=stag
   build:
+    local:
+      push: true
     tagPolicy:
       envTemplate:
         template: "stag-{{.TAGS}}"
