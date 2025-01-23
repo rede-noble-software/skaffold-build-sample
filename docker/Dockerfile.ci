@@ -1,0 +1,30 @@
+# Use a base image with the necessary tools
+FROM alpine:latest
+
+# Install dependencies
+RUN apk add --no-cache curl git docker tree unzip
+
+# Set common environment variables for dynamic downloads
+ENV OS=linux
+RUN export ARCH="`uname -m`" && \
+    if [ "$ARCH" = "aarch64" ]; then export ARCH=arm64; fi && \
+    echo "OS: $OS, ARCH: $ARCH" && \
+    curl -L "https://github.com/a8m/envsubst/releases/download/v1.4.2/envsubst-Linux-${ARCH}" -o /usr/local/bin/envsubst && \
+    chmod +x /usr/local/bin/envsubst
+RUN export ARCH="`uname -m`" && \
+    if [ "$ARCH" = "x86_64" ]; then export ARCH=amd64; fi && \
+    if [ "$ARCH" = "aarch64" ]; then export ARCH=arm64; fi && \
+    echo "OS: $OS, ARCH: $ARCH" && \
+    curl -Lo /usr/local/bin/skaffold "https://storage.googleapis.com/skaffold/releases/latest/skaffold-${OS}-${ARCH}" && \
+    chmod +x /usr/local/bin/skaffold && \
+    curl -Lo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.7.0-${OS}-${ARCH}.tar.gz" && \
+    tar -zxvf /tmp/helm.tar.gz -C /tmp && \
+    mv /tmp/${OS}-${ARCH}/helm /usr/local/bin/helm && \
+    chmod +x /usr/local/bin/helm && \
+    rm -rf /tmp/helm.tar.gz /tmp/${OS}-${ARCH} && \
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/${OS}/${ARCH}/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+RUN mkdir -p /root/.kube && touch /root/.kube/config
+# Set the working directory
+WORKDIR /root

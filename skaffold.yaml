@@ -1,0 +1,38 @@
+apiVersion: skaffold/v3
+kind: Config
+
+profiles:
+- name: dev
+  activation:
+  - env: ACTIVATE=dev
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "dev-{{.TAGS}}"
+
+    artifacts:
+    - image: python-server
+      context: ./app-1
+      docker:
+        dockerfile: Dockerfile
+    - image: node-server
+      context: ./app-2
+      docker:
+        dockerfile: Dockerfile
+
+- name: stag
+  activation:
+  - env: ACTIVATE=stag
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "stag-{{.TAGS}}"
+    artifacts:
+    - image: python-server
+      context: ./app-1
+      docker:
+        dockerfile: Dockerfile
+    - image: node-server
+      context: ./app-2
+      docker:
+        dockerfile: Dockerfile
