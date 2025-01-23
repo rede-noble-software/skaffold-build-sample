@@ -14,5 +14,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v3
+      with:
+        token: ${{ secrets.PAT }} # bisa menggunakan enterprise token / group token / repo token. sementara ini menggunakan personal access token
+        repository: rede-noble-software/skaffold-ops
+        event-type: triger-event
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     # testing  and other specific of the project eg. linting, unit tests, etc
 
