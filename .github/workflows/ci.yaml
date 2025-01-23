@@ -14,12 +14,15 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Extract branch name
+      id: extract_branch
+      run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
     - name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v3
       with:
         repository: rede-noble-software/skaffold-ops
         event-type: triger-event
-        client-payload: '{"ref": "${{ github.ref#refs/heads/ }}", "repo_source": "https://github.com/${{ github.repository }}" , "config_path": "."}'
+        client-payload: '{"ref": "${{ steps.extract_branch.outputs.branch_name }}", "repo_source": "https://github.com/${{ github.repository }}" , "config_path": "."}'
         token: ${{ vars.MPAT }}
     # testing  and other specific of the project eg. linting, unit tests, etc
 
