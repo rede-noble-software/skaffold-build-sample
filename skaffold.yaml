@@ -21,7 +21,7 @@ profiles:
 
 - name: stag
   activation:
-  - env: REF_BRANCH=stag
+  - env: REF_BRANCH=master
   # - kubeContext: aws-cluster
   manifests:
     rawYaml:
