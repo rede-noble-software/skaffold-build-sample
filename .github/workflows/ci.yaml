@@ -26,11 +26,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set up Skaffold
-      uses: GoogleContainerTools/skaffold@v2
-
-    - name: Build and push Docker image
-      run: skaffold build --file-output=build.out
-
-    - name: Push Docker image to GitHub Container Registry
-      run: docker push ${{ env.IMAGE_NAME }}
+    - name: Run Skaffold pipeline as action
+      uses: hiberbee/github-action-skaffold@1.19.0
+      with:
+        command: build
+        repository: ghcr.io/${{ github.repository }}
