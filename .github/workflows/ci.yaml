@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Run Skaffold pipeline as action
-      uses: hiberbee/github-action-skaffold@1.19.0
+      uses: hiberbee/github-action-skaffold@2.13.2
       with:
         command: build
         repository: ghcr.io/${{ github.repository }}
