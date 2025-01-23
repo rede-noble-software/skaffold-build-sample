@@ -20,6 +20,6 @@ jobs:
         repository: rede-noble-software/skaffold-ops
         event-type: triger-event
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-        token: ${{ secrets.PAT }}
+        token: XXXXXX
     # testing  and other specific of the project eg. linting, unit tests, etc
 
