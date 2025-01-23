@@ -1,10 +1,10 @@
 apiVersion: skaffold/v3
 kind: Config
-
 profiles:
 - name: dev
   activation:
-  - env: ACTIVATE=dev
+  - env: REF_BRANCH=dev
+  - kubeContext: dewacloud-cluster
   build:
     tagPolicy:
       envTemplate:
@@ -18,10 +18,17 @@ profiles:
       context: ./app-2
       docker:
         dockerfile: Dockerfile
+  manifests:
+    rawYaml:
+    - k8s/dev/*.yaml
 
 - name: stag
   activation:
-  - env: ACTIVATE=stag
+  - env: REF_BRANCH=stag
+  - kubeContext: aws-cluster
+  manifests:
+    rawYaml:
+    - k8s/stag/*.yaml
   build:
     tagPolicy:
       envTemplate:
