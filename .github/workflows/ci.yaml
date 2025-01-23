@@ -17,10 +17,9 @@ jobs:
     - name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v3
       with:
-        # bisa menggunakan enterprise token / group token / repo token. sementara ini menggunakan personal access token
-        token: ${{ secrets.PAT }}
         repository: rede-noble-software/skaffold-ops
         event-type: triger-event
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+        token: ${{ secrets.PAT }}
     # testing  and other specific of the project eg. linting, unit tests, etc
 
