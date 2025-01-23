@@ -14,5 +14,5 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    # testing python
+    # testing  and other specific of the project eg. linting, unit tests, etc
 

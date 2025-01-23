@@ -4,7 +4,7 @@ profiles:
 - name: dev
   activation:
   - env: REF_BRANCH=dev
-  - kubeContext: dewacloud-cluster
+  # - kubeContext: dewacloud-cluster
   build:
     tagPolicy:
       envTemplate:
@@ -14,10 +14,7 @@ profiles:
       context: ./app-1
       docker:
         dockerfile: Dockerfile
-    - image: node-server
-      context: ./app-2
-      docker:
-        dockerfile: Dockerfile
+
   manifests:
     rawYaml:
     - k8s/dev/*.yaml
@@ -25,7 +22,7 @@ profiles:
 - name: stag
   activation:
   - env: REF_BRANCH=stag
-  - kubeContext: aws-cluster
+  # - kubeContext: aws-cluster
   manifests:
     rawYaml:
     - k8s/stag/*.yaml
@@ -36,9 +33,5 @@ profiles:
     artifacts:
     - image: python-server
       context: ./app-1
-      docker:
-        dockerfile: Dockerfile
-    - image: node-server
-      context: ./app-2
       docker:
         dockerfile: Dockerfile
