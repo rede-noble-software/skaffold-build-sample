@@ -9,7 +9,6 @@ profiles:
     tagPolicy:
       envTemplate:
         template: "dev-{{.TAGS}}"
-
     artifacts:
     - image: python-server
       context: ./app-1
